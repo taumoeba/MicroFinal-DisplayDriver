@@ -109,6 +109,7 @@ void dualTimers_Lane1Wins() { // Not final function
 
 void pixel_setup()
 {
+  
   matrix.begin();
   Serial.begin(9600);
   matrix.setCursor(0, 0);

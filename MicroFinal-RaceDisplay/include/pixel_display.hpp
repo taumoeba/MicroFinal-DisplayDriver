@@ -18,5 +18,6 @@ void startupMessage();
 void displayHeat(char heatNum);
 void dualTimers();
 void dualTimers_Lane1Wins();
+void dualTimers_Lane2Wins();
 
 #endif
