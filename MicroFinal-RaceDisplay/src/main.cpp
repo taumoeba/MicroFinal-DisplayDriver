@@ -50,10 +50,96 @@ for (w=0; w<8; w++) {
 
 */
 
+char inByte = 0;
+char dualTimersMsg[] = {'0','.','0', '0', '0'};
+char dualTimersMsg2[] = {'8','.','0', '3', '6'};
+
+void startupMessage() { // Slide 1
+  matrix.setCursor(2,4);
+  matrix.println("Rocket Car");
+  matrix.setCursor(2,16);
+  matrix.println("Race Track");
+}
+
+void displayHeat(int heatNum) { // Between slides 2 and 3
+  matrix.setTextSize(2);
+  matrix.setCursor(8,0);
+  matrix.print("Heat");
+  matrix.setCursor(20,16);
+  matrix.print("#");
+  matrix.print(heatNum);
+}
+
+void dualTimers() { // Not final function
+  matrix.fillScreen(matrix.Color333(0, 0, 0));
+  matrix.setCursor(4,0);
+  matrix.print("Car");
+  matrix.setCursor(22, 0); // Same x-loc as end of previous char
+  matrix.print("1"); // "Car 1" is 22 pixels long
+  matrix.drawLine(31, 0, 31, 32, matrix.Color333(7,7,7));
+  matrix.drawLine(32, 0, 32, 32, matrix.Color333(7,7,7));
+  matrix.setCursor(37, 0);
+  matrix.print("Car");
+  matrix.setCursor(55, 0);
+  matrix.print("2");
+  matrix.setCursor(1, 16);
+  for(int i=0; i<5; i++) {
+    matrix.print(dualTimersMsg[i]);
+  }
+  matrix.setCursor(34, 16);
+  for(int i=0; i<5; i++) {
+    matrix.print(dualTimersMsg[i]);
+  }
+}
+
+void dualTimers_Lane1Wins() { // Not final function
+  matrix.fillScreen(matrix.Color333(0, 0, 0));
+  //Line
+  matrix.drawLine(31, 0, 31, 32, matrix.Color333(7,7,7));
+  matrix.drawLine(32, 0, 32, 32, matrix.Color333(7,7,7));
+  //Car2
+  matrix.setCursor(37, 0);
+  matrix.print("Car");
+  matrix.setCursor(55, 0);
+  matrix.print("2");
+  // Car 1 Wins
+  matrix.setCursor(4, 4);
+  matrix.setTextColor(matrix.Color888(0,255,0));
+  matrix.print("Car");
+  matrix.setCursor(22, 4); // Same x-loc as end of previous char
+  matrix.print("1"); // "Car 1" is 22 pixels long
+  matrix.setCursor(2,16);
+  matrix.print("Wins!");
+  //Car 2
+  matrix.setCursor(34, 16);
+  matrix.setTextColor(matrix.Color888(255,255,255));
+  for(int i=0; i<5; i++) {
+    matrix.print(dualTimersMsg2[i]);
+  }
+}
+
 void setup() {
   matrix.begin();
+  Serial.begin(9600);
+  matrix.setCursor(0, 0);
+  matrix.setTextSize(1);
+  /* Printing a float
+  for(int i=0; i<3; i++) {
+    matrix.print(printThis[i]);
+  }
+  */
 }
 
 void loop() {
+  /*
+  if(Serial.available() > 0) {
+    inByte = Serial.read();
+   matrix.print(inByte);
+  }
+  
+ dualTimers();
+ dualTimers_Lane1Wins();
+ */
+  displayHeat(4);
   
 }
