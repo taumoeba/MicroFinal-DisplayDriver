@@ -1,16 +1,5 @@
-#include <Arduino.h>
-#include <SPI.h>
-#include <RGBmatrixPanel.h>
+#include "pixel_display.hpp"
 
-#define CLK 11 // USE THIS ON ARDUINO MEGA
-#define OE   9
-#define LAT 10
-#define A   A0
-#define B   A1
-#define C   A2
-#define D   A3
-
-RGBmatrixPanel matrix(A, B, C, D, CLK, LAT, OE, false, 64);
 
 /* Usable Functions:
 
@@ -118,7 +107,8 @@ void dualTimers_Lane1Wins() { // Not final function
   }
 }
 
-void setup() {
+void pixel_setup()
+{
   matrix.begin();
   Serial.begin(9600);
   matrix.setCursor(0, 0);
@@ -128,6 +118,11 @@ void setup() {
     matrix.print(printThis[i]);
   }
   */
+
+}
+
+void setup() {
+  pixel_setup();
 }
 
 void loop() {
