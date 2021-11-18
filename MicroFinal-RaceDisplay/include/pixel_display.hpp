@@ -13,7 +13,7 @@
 #define C   A2
 #define D   A3
 
-RGBmatrixPanel matrix(A, B, C, D, CLK, LAT, OE, false, 64);
+extern RGBmatrixPanel matrix;
 void startupMessage();
 void displayHeat(char heatNum);
 void raceStart();

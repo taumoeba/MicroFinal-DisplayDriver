@@ -1,7 +1,15 @@
 {
 	"folders": [
+		//{
+		//	"path": "."
+		//}
 		{
-			"path": "."
+			"name": "MicroFinal-HelloWorld",
+			"path": "MicroFinal-HelloWorld"
+		},
+		{
+			"name": "MicroFinal-RaceDisplay",
+			"path": "MicroFinal-RaceDisplay"
 		}
 	],
 	"settings": {}
