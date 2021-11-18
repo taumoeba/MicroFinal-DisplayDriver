@@ -111,14 +111,14 @@ void finalTimes(unsigned long lane1Millis, unsigned long lane2Millis) {
   matrix.setCursor(6,21);
   matrix.print('.');
   matrix.setCursor(11,21);
-  matrix.print(lane1Millis-((lane1Millis/1000)*1000));
+  matrix.print(lane1Millis%1000);
   // Time 2
   matrix.setCursor(35,21);
   matrix.print(lane2Millis/1000);
   matrix.setCursor(40,21);
   matrix.print('.');
   matrix.setCursor(45,21);
-  matrix.print(lane2Millis-((lane2Millis/1000)*1000));
+  matrix.print(lane2Millis%1000);
 }
 
 void timeOut() {
