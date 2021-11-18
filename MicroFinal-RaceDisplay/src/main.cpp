@@ -111,9 +111,18 @@ void finalTimes(unsigned long lane1Millis, unsigned long lane2Millis) {
   matrix.print(lane2Millis-((lane2Millis/1000)*1000));
 }
 
+void timeOut() {
+  matrix.setTextColor(matrix.Color888(255,255,255));
+  matrix.fillScreen(matrix.Color333(0, 0, 0)); // Blank screen
+  matrix.setTextSize(2);
+  matrix.setCursor(8,1);
+  matrix.print("Time");
+  matrix.setCursor(16,17);
+  matrix.print("Out");
+}
+
 void setup()
 {
-  
   matrix.begin();
 }
 
@@ -124,6 +133,8 @@ void loop() {
   displayHeat('4');
   delay(2000);
   raceStart();
+  delay(2000);
+  timeOut();
   delay(2000);
   carFinish('1');
   delay(2000);

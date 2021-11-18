@@ -19,5 +19,6 @@ void displayHeat(char heatNum);
 void raceStart();
 void carFinish(char laneNum);
 void finalTimes(unsigned long lane1Millis, unsigned long lane2Millis);
+void timeOut();
 
 #endif
