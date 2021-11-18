@@ -16,8 +16,9 @@
 RGBmatrixPanel matrix(A, B, C, D, CLK, LAT, OE, false, 64);
 void startupMessage();
 void displayHeat(char heatNum);
-void dualTimers();
-void dualTimers_Lane1Wins();
-void dualTimers_Lane2Wins();
+void raceStart();
+void carFinish(char laneNum);
+void finalTimes(unsigned long lane1Millis, unsigned long lane2Millis);
+void timeOut();
 
 #endif
