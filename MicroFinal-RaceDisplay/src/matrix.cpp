@@ -82,7 +82,8 @@ void carFinish(char laneNum) { // laneNum should be 1 or 2
   matrix.print("Wins!");
 }
 
-void finalTimes(unsigned long lane1Millis, unsigned long lane2Millis) {
+void finalTimes(unsigned int lane1Millis, unsigned int lane2Millis) 
+{
   matrix.setTextColor(matrix.Color888(255,255,255));
   matrix.fillScreen(matrix.Color333(0, 0, 0)); // Blank screen
   // Final Times
@@ -107,18 +108,36 @@ void finalTimes(unsigned long lane1Millis, unsigned long lane2Millis) {
   matrix.print("2");
   // Time 1
   matrix.setCursor(2,21);
-  matrix.print(lane1Millis/1000);
-  matrix.setCursor(6,21);
-  matrix.print('.');
-  matrix.setCursor(11,21);
-  matrix.print(lane1Millis%1000);
+  unsigned int time_check = lane1Millis/1000;
+  if (time_check >=10)
+  {
+    matrix.print("TIMEOUT");
+  }
+  else
+  {
+    matrix.print(time_check);
+    matrix.setCursor(6,21);
+    matrix.print('.');
+    matrix.setCursor(11,21);
+    matrix.print(lane1Millis%1000);
+  }
+
   // Time 2
   matrix.setCursor(35,21);
-  matrix.print(lane2Millis/1000);
-  matrix.setCursor(40,21);
-  matrix.print('.');
-  matrix.setCursor(45,21);
-  matrix.print(lane2Millis%1000);
+  time_check = lane2Millis/1000;
+  if (time_check >=10)
+  {
+    matrix.print("TIMEOUT");
+  }
+  else
+  {
+    matrix.print(time_check);
+    matrix.setCursor(40,21);
+    matrix.print('.');
+    matrix.setCursor(45,21);
+    matrix.print(lane2Millis%1000);
+  }
+ 
 }
 
 void timeOut() {
