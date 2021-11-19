@@ -111,7 +111,7 @@ void finalTimes(unsigned int lane1Millis, unsigned int lane2Millis)
   unsigned int time_check = lane1Millis/1000;
   if (time_check >=10)
   {
-    matrix.print("TIMEOUT");
+    timeOut();
   }
   else
   {
@@ -127,7 +127,7 @@ void finalTimes(unsigned int lane1Millis, unsigned int lane2Millis)
   time_check = lane2Millis/1000;
   if (time_check >=10)
   {
-    matrix.print("TIMEOUT");
+    timeOut();
   }
   else
   {

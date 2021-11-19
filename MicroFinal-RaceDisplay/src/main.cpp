@@ -61,9 +61,9 @@ void parse_input()
   }
   else if(finish_received)
   {
-    //Serial.readBytesUntil('\n', buffer, TIME_BYTES);
-    buffer[0] = 255; ///TODO: MSB overflows on display
-    buffer[1] = 255;
+    Serial.readBytesUntil('\n', buffer, TIME_BYTES);
+    //buffer[0] = 255; ///TODO: MSB overflows on display
+    //buffer[1] = 255;
     //unsigned int time1 = *((unsigned int*)buffer);
     unsigned int temp;
     temp  = (unsigned int) buffer[1];
@@ -77,9 +77,9 @@ void parse_input()
     Serial.print('.');
     Serial.println(time1 % 1000UL);
     Serial.println("END");
-    //Serial.readBytesUntil('\n', buffer, TIME_BYTES);
-    buffer[1] = 0;
-    buffer[0] = 0;
+    Serial.readBytesUntil('\n', buffer, TIME_BYTES);
+    //buffer[1] = 0;
+    //buffer[0] = 0;
     temp  = (unsigned int) buffer[1];
     temp |=((unsigned int) buffer[0]) << 8;
     unsigned int time2 = temp;
