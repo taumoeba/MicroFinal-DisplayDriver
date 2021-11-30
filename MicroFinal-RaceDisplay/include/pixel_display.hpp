@@ -20,5 +20,6 @@ void raceStart();
 void carFinish(char laneNum);
 void finalTimes(unsigned int lane1Millis, unsigned int lane2Millis);
 void timeOut();
+void blockReceiveBytes(char *buffer, size_t length);
 
 #endif

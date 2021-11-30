@@ -1,6 +1,7 @@
 #include "pixel_display.hpp"
 
 #define TIME_BYTES 2
+#define BAUD_RATE 9600
 enum commands {null_signal = 0, start_signal = 'S', winner_signal = 'W', finish_signal = 'F' };
 extern char heatNum;
 
@@ -11,7 +12,6 @@ void setup()
 {
   matrix.begin();
   Serial.begin(9600);
-  Serial.setTimeout(10000);
   startupMessage(); // on boot command
 }
 
@@ -55,33 +55,35 @@ void parse_input()
 
   if(winner_received)
   {
-    Serial.readBytesUntil('\n', buffer, 1);
+    blockReceiveBytes(buffer, 1);
     carFinish(buffer[0]);
     winner_received = false;
   }
   else if(finish_received)
   {
-    Serial.readBytesUntil('\n', buffer, TIME_BYTES);
-    //buffer[0] = 255; ///TODO: MSB overflows on display
-    //buffer[1] = 255;
+    blockReceiveBytes(buffer, TIME_BYTES);
+    // buffer[1] = 3;
+    //buffer[0] = 3; ///TODO: MSB overflows on display
+ 
     //unsigned int time1 = *((unsigned int*)buffer);
-    unsigned int temp;
-    temp  = (unsigned int) buffer[1];
-    temp |=((unsigned int) buffer[0]) << 8;
+    unsigned int temp = 0;
+    temp  = (unsigned int) buffer[0];
+    temp |=((unsigned int) buffer[1]) << 8;
   
     unsigned int time1 = temp;
 
     Serial.println("START");
 
-    Serial.print(time1 / 1000UL);
+    Serial.print(time1 / 1000);
     Serial.print('.');
-    Serial.println(time1 % 1000UL);
+    Serial.println(time1 % 1000);
     Serial.println("END");
-    Serial.readBytesUntil('\n', buffer, TIME_BYTES);
-    //buffer[1] = 0;
-    //buffer[0] = 0;
-    temp  = (unsigned int) buffer[1];
-    temp |=((unsigned int) buffer[0]) << 8;
+    Serial.println(time1);
+    blockReceiveBytes(buffer, TIME_BYTES);
+    //buffer[1] = 9;
+    //buffer[0] = 9;
+    temp  = (unsigned int) buffer[0];
+    temp |=((unsigned int) buffer[1]) << 8;
     unsigned int time2 = temp;
     finalTimes(time1, time2);
     finish_received = false;

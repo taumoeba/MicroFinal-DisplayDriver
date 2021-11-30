@@ -1,5 +1,5 @@
 #include "pixel_display.hpp"
-
+#define TIME_OUT 1000
 RGBmatrixPanel matrix(A, B, C, D, CLK, LAT, OE, false, 64);
 char heatNum = '4'; //Temp var for testing
 
@@ -108,7 +108,7 @@ void finalTimes(unsigned int lane1Millis, unsigned int lane2Millis)
   matrix.print("2");
   // Time 1
   matrix.setCursor(2,21);
-  unsigned int time_check = lane1Millis/1000;
+  unsigned int time_check = lane1Millis/1000U;
   if (time_check >=10)
   {
     timeOut();
@@ -119,7 +119,7 @@ void finalTimes(unsigned int lane1Millis, unsigned int lane2Millis)
     matrix.setCursor(6,21);
     matrix.print('.');
     matrix.setCursor(11,21);
-    matrix.print(lane1Millis%1000);
+    matrix.print(lane1Millis%1000U);
   }
 
   // Time 2
@@ -172,4 +172,42 @@ void pixel_loop() {
   finalTimes(4317, 5184);
   delay(2000);
 }
+
+/* Block until X bytes have been received. If the function has a timeout
+* the buffer is filled with '\0' to indicate the info was corrupted.
+*/
+void blockReceiveBytes(char *buffer, size_t length)
+{
+  uint8_t i = 0;
+  uint32_t timeOut = TIME_OUT;
+
+  /* Block and receive a length of bytes*/
+  for (i = 0; i < length; i++)
+  {
+
+    uint32_t deltaTime = 0;
+    uint32_t timeStart = millis(); /* Check current time */
+
+    /* Blocking until a byte is ready*/
+    while (!Serial.available() && deltaTime < timeOut)
+    {
+      /*wait and check timeout condition*/
+      deltaTime = millis() - timeStart;
+    }
+
+    if (deltaTime < timeOut)
+    {
+      Serial.readBytes(&buffer[i], 1);
+    }
+    else /*Error condition if time out*/
+    {
+      for(size_t i = 0; i < length; i++)
+      {
+        buffer[i] = '\0';
+      }
+      break;
+    }
+  }
+}
+
 
