@@ -10,6 +10,7 @@ void parse_input();
 
 void setup() 
 {
+  // Start matrix and serial communication
   matrix.begin();
   Serial.begin(9600);
   startupMessage(); // on boot command

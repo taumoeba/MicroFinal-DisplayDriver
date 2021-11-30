@@ -1,11 +1,10 @@
 #include "pixel_display.hpp"
 #define TIME_OUT 1000
 RGBmatrixPanel matrix(A, B, C, D, CLK, LAT, OE, false, 64);
-char heatNum = '4'; //Temp var for testing
 
-void startupMessage() { // Display once in void setup()
-  matrix.setTextColor(matrix.Color888(252,255,255));
-  matrix.fillScreen(matrix.Color333(0, 0, 0)); // Blank screen
+void startupMessage() {                               // Display startup message, run once in void setup()
+  matrix.setTextColor(matrix.Color888(252,255,255));  // Set text color as white
+  matrix.fillScreen(matrix.Color333(0, 0, 0));        // Blank screen
   matrix.setTextSize(1);
   matrix.setCursor(2,4);
   matrix.println("Rocket Car");
@@ -13,51 +12,53 @@ void startupMessage() { // Display once in void setup()
   matrix.println("Race Track");
 }
 
-void displayHeat(char heatNum) { // TO FIX: If heatNum is over 9, formatting gets weird
-  matrix.setTextColor(matrix.Color888(255,255,255));
-  matrix.fillScreen(matrix.Color333(0, 0, 0)); // Blank screen
+void displayHeat(char heatNum) {                        // Display current heat number
+  matrix.setTextColor(matrix.Color888(255,255,255));    // Set text color as white
+  matrix.fillScreen(matrix.Color888(0, 0, 0));          // Blank screen
   matrix.setTextSize(2);
-  matrix.setCursor(8,1);
+  if(heatNum - '0' > 9) matrix.setCursor(1,1);          // If heat number is two digits, left-align text to get more space
+  else matrix.setCursor(8,1);
   matrix.print("Heat");
-  matrix.setCursor(20,17);
+  if(heatNum - '0' > 9) matrix.setCursor(12,17);        // If heat number is two digits, left-align text to get more space
+  else matrix.setCursor(20,17);
   matrix.print("#");
   matrix.print(heatNum);
 }
 
-void raceStart() {
-  matrix.setTextColor(matrix.Color888(255,255,255));
-  matrix.fillScreen(matrix.Color333(0, 0, 0)); // Blank screen
+void raceStart() {                                      // Display countdown before race
+  matrix.setTextColor(matrix.Color888(255,255,255));    // Set text color as white
+  matrix.fillScreen(matrix.Color888(0, 0, 0));          // Blank screen
   matrix.setTextSize(4);
   matrix.setCursor(22,2);
-  matrix.setTextColor(matrix.Color888(255, 0, 0));
+  matrix.setTextColor(matrix.Color888(255, 0, 0));      // Set text color as red
   matrix.print('3');
   delay(1000);
-  matrix.fillScreen(matrix.Color333(0, 0, 0)); // Blank screen
+  matrix.fillScreen(matrix.Color888(0, 0, 0));          // Blank screen
   matrix.setCursor(22,2);
-  matrix.setTextColor(matrix.Color888(252, 119, 3));
+  matrix.setTextColor(matrix.Color888(252, 119, 3));    // Set text color as orange
   matrix.print('2');
   delay(1000);
-  matrix.fillScreen(matrix.Color333(0, 0, 0)); // Blank screen
+  matrix.fillScreen(matrix.Color888(0, 0, 0));          // Blank screen
   matrix.setCursor(22,2);
-  matrix.setTextColor(matrix.Color888(252, 186, 3));
+  matrix.setTextColor(matrix.Color888(252, 186, 3));    // Set text color as yellow
   matrix.print('1');
   delay(1000);
-  matrix.fillScreen(matrix.Color333(0, 0, 0)); // Blank screen
+  matrix.fillScreen(matrix.Color888(0, 0, 0));          // Blank screen
   matrix.setCursor(10,2);
-  matrix.setTextColor(matrix.Color888(0, 255, 0));
+  matrix.setTextColor(matrix.Color888(0, 255, 0));      // Set text color as green
   matrix.print("GO");
 }
 
-void raceProgress()
+void raceProgress()                                     // Prototype function for displaying image during race
 {
   uint16_t img = 0;
   matrix.drawRGBBitmap(0, 0, &img, 64, 32);
   //matrix.drawRGBBitmap(0, 0, &img, &mask, 64, 32);
 }
 
-void carFinish(char laneNum) { // laneNum should be 1 or 2
-  matrix.setTextColor(matrix.Color888(255,255,255));
-  matrix.fillScreen(matrix.Color333(0, 0, 0)); // Blank screen
+void carFinish(char laneNum) {                          // Display which car wins. laneNum should be 1 or 2
+  matrix.setTextColor(matrix.Color888(255,255,255));    // Set text color as white
+  matrix.fillScreen(matrix.Color888(0, 0, 0));          // Blank screen
   matrix.setTextSize(2);
   matrix.setCursor(6,1);
   matrix.print("Car ");
@@ -67,10 +68,10 @@ void carFinish(char laneNum) { // laneNum should be 1 or 2
   matrix.print("Wins!");
 }
 
-void finalTimes(unsigned int lane1Millis, unsigned int lane2Millis) 
+void finalTimes(unsigned int lane1Millis, unsigned int lane2Millis) // Display final race times
 {
-  matrix.setTextColor(matrix.Color888(255,255,255));
-  matrix.fillScreen(matrix.Color333(0, 0, 0)); // Blank screen
+  matrix.setTextColor(matrix.Color888(255,255,255));    // Set text color as white
+  matrix.fillScreen(matrix.Color333(0, 0, 0));          // Blank screen
   // Final Times
   matrix.setTextSize(1);
   matrix.setCursor(1,0);
@@ -94,7 +95,7 @@ void finalTimes(unsigned int lane1Millis, unsigned int lane2Millis)
   // Time 1
   matrix.setCursor(2,21);
   unsigned int time_check = lane1Millis/1000U;
-  if (time_check >=10)
+  if (time_check >=10)                                  // If the race took over ten seconds, it is invalid. Declare a timeout.
   {
     timeOut();
   }
@@ -110,7 +111,7 @@ void finalTimes(unsigned int lane1Millis, unsigned int lane2Millis)
   // Time 2
   matrix.setCursor(35,21);
   time_check = lane2Millis/1000;
-  if (time_check >=10)
+  if (time_check >=10)                                  // If the race took over ten seconds, it is invalid. Declare a timeout.
   {
     timeOut();
   }
@@ -125,9 +126,9 @@ void finalTimes(unsigned int lane1Millis, unsigned int lane2Millis)
  
 }
 
-void timeOut() {
-  matrix.setTextColor(matrix.Color888(255,255,255));
-  matrix.fillScreen(matrix.Color333(0, 0, 0)); // Blank screen
+void timeOut() {                                       // Display timeout message
+  matrix.setTextColor(matrix.Color888(255,255,255));   // Set text color as white
+  matrix.fillScreen(matrix.Color888(0, 0, 0));         // Blank screen
   matrix.setTextSize(2);
   matrix.setCursor(8,1);
   matrix.print("Time");
@@ -135,13 +136,13 @@ void timeOut() {
   matrix.print("Out");
 }
 
-void pixel_setup()
+void pixel_setup()                                      // Setup matrix display
 {
   matrix.begin();
 }
 
 void pixel_loop() {
-  // Looping through available screens
+  // Looping through available screens for demo purposes
   startupMessage();
   delay(2000);
   displayHeat('4');
