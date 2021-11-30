@@ -3,21 +3,6 @@
 RGBmatrixPanel matrix(A, B, C, D, CLK, LAT, OE, false, 64);
 char heatNum = '4'; //Temp var for testing
 
-/* DON'T DELETE YET. Method 1 for active timer.
-unsigned long currentMillis = millis();
-  if (currentMillis - previousMillis >= 250) {
-    previousMillis = currentMillis;
-    raceTimer++;
-
-    displayTimers(raceTimer);
-  }
-
-
-unsigned long currentMillis = millis();
-unsigned long previousMillis = 0;
-unsigned long raceTimer = 0; // Must reset when race is done. When displaying results?
-*/
-
 void startupMessage() { // Display once in void setup()
   matrix.setTextColor(matrix.Color888(252,255,255));
   matrix.fillScreen(matrix.Color333(0, 0, 0)); // Blank screen
