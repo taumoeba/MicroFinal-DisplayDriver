@@ -12,7 +12,7 @@ void startupMessage() {                               // Display startup message
   matrix.println("Race Track");
 }
 
-void displayHeat(char heatNum) {                        // Display current heat number
+void displayHeat(uint8_t heatNum) {                        // Display current heat number
   matrix.setTextColor(matrix.Color888(255,255,255));    // Set text color as white
   matrix.fillScreen(matrix.Color888(0, 0, 0));          // Blank screen
   matrix.setTextSize(2);
@@ -56,7 +56,7 @@ void raceProgress()                                     // Prototype function fo
   //matrix.drawRGBBitmap(0, 0, &img, &mask, 64, 32);
 }
 
-void carFinish(char laneNum) {                          // Display which car wins. laneNum should be 1 or 2
+void carFinish(uint8_t laneNum) {                          // Display which car wins. laneNum should be 1 or 2
   matrix.setTextColor(matrix.Color888(255,255,255));    // Set text color as white
   matrix.fillScreen(matrix.Color888(0, 0, 0));          // Blank screen
   matrix.setTextSize(2);

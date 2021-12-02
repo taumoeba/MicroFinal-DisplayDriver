@@ -3,7 +3,7 @@
 #define TIME_BYTES 2
 #define BAUD_RATE 9600
 enum commands {null_signal = 0, start_signal = 'S', winner_signal = 'W', finish_signal = 'F' };
-extern char heatNum;
+uint8_t heatNum;
 
 void pixel_loop();
 void parse_input();
@@ -12,7 +12,7 @@ void setup()
 {
   // Start matrix and serial communication
   matrix.begin();
-  Serial.begin(9600);
+  Serial.begin(9600, SERIAL_8N2);
   startupMessage(); // on boot command
 }
 
@@ -38,6 +38,8 @@ void parse_input()
   switch(input_command)
   {
     case start_signal:
+      while(!Serial.available());
+      heatNum = Serial.read();
       displayHeat(heatNum);
       delay(2000);
       raceStart();
