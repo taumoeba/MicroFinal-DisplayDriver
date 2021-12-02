@@ -17,11 +17,11 @@ extern RGBmatrixPanel matrix;
 // Display startup message, run once in void setup()
 void startupMessage();
 // Display current heat number
-void displayHeat(uint8_t heatNum);
+void displayHeat(char heatNum);
 // Display countdown before race
 void raceStart();
 // Display which car wins. laneNum should be 1 or 2
-void carFinish(uint8_t laneNum);
+void carFinish(char laneNum);
 // Display final race times
 void finalTimes(unsigned int lane1Millis, unsigned int lane2Millis);
 // Display timeout message
